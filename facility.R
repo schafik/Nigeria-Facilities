@@ -56,7 +56,7 @@ h_1 <- dlply(h, .(mylga), function(smalldf) {
         
 for (lga in h$mylga) {
   h_lga_df <- h_1[[lga]]
-  pdf(paste("healthoutput/", lga, "_health21.pdf", sep=""), width=11)
+  pdf(paste("healthoutput/", lga, "_health.pdf", sep=""), width=11)
   textplot(h_lga_df[order(h_lga_df$community, h_lga_df$facility_type),][-c(1,2)], show.rownames = FALSE, cex=.90)
   title(lga)
   dev.off()
