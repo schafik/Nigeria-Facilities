@@ -20,9 +20,9 @@ health3 <- read.csv("Health_22_05_2012_2012_10_03_16_51_22.csv", header = TRUE)
 #e2 <- education2[c('mylga_state', 'mylga', 'ward', 'community', 'school_name', 'school_address', 'level_of_education')]
 #e3 <- education3[c('mylga_state', 'mylga', 'ward', 'community', 'school_name', 'school_address', 'level_of_education')]
 
-h1 <- health[c('mylga', 'mylga_state', 'ward', 'community', 'facility_name', 'facility_address', 'facility_type')]    
-h2 <- health2[c('mylga', 'mylga_state', 'ward', 'community', 'facility_name', 'facility_address', 'facility_type')]
-h3 <- health3[c('mylga', 'mylga_state', 'ward', 'community', 'facility_name', 'facility_address', 'facility_type')] 
+h1 <- health[c('mylga', 'mylga_state', 'ward', 'community', 'facility_type', 'facility_name', 'facility_address')]    
+h2 <- health2[c('mylga', 'mylga_state', 'ward', 'community', 'facility_type', 'facility_name', 'facility_address')]
+h3 <- health3[c('mylga', 'mylga_state', 'ward', 'community', 'facility_type', 'facility_name', 'facility_address')] 
 
 
 #w1 <- water[c('mylga', 'mylga_state', 'ward', 'community', 'water_scheme_type', 'water_source_type', 'lift_mechanism')]       
@@ -39,7 +39,6 @@ row.names(h) <- NULL
 
 
 ################Generating Text Plots#################
-
 ####education
 #dlply(e, .(mylga), function(smalldf) { 
  # smalldf 
@@ -54,17 +53,15 @@ h_1 <- dlply(h, .(mylga), function(smalldf) {
   smalldf
 })
         
+levels(h$mylga)[levels(h$mylga)=="n/a"] <- "NA"
+
 for (lga in h$mylga) {
   h_lga_df <- h_1[[lga]]
-  pdf(paste("healthoutput/", lga, "_health.pdf", sep=""), width=11)
-  textplot(h_lga_df[order(h_lga_df$community, h_lga_df$facility_type),][-c(1,2)], show.rownames = FALSE, cex=.90)
-  title(lga)
+  pdf(paste("healthoutput/", lga, "_health.pdf", sep=""), width=12)
+  textplot(h_lga_df[order(h_lga_df$community, h_lga_df$facility_type),][-c(1,2)], show.rownames = FALSE, mfrow=50)
+  title(lga, cex=1.25)
   dev.off()
   }
-  
-
-
-
 
 ####water
 #dlply(w, .(mylga), function(smalldf) { 
@@ -73,6 +70,7 @@ for (lga in h$mylga) {
 
 
 #####CLEANING #####
+
 
 #clean_w <- subset(w, (water_source_type!="420.5") & (water_source_type!="8.95821313") & (water_source_type!="6.77697973 9.27850141 263.79998779296875 5.0")
  #                 & (water_source_type!="Kore") & (water_source_type!="Owerri") & (water_source_type!="adamawa")
