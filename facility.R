@@ -6,15 +6,15 @@ library('gplots')
 
 
 row.names=FALSE
-education <- read.csv("Education_05_06_2012_2012_08_16.csv", header = TRUE)
-education2 <- read.csv("Education_17_04_2012_2012_08_21.csv", header = TRUE)
-education3 <- read.csv("Education_22_05_2012_2012_08_21.csv", header = TRUE)
+education <- read.csv("Education_05_06_2012_2012_10_05_09_56_27.csv", header = TRUE)
+education2 <- read.csv("Education_17_04_2012_2012_10_05_16_37_54.csv", header = TRUE)
+education3 <- read.csv("Education_22_05_2012_2012_10_05_16_39_30.csv", header = TRUE)
 health <- read.csv("Health_05_06_2012_2012_10_03_16_48_41.csv", header = TRUE)
 health2 <- read.csv("Health_17_04_2012_2012_10_03_16_49_35.csv", header = TRUE)
 health3 <- read.csv("Health_22_05_2012_2012_10_03_16_51_22.csv", header = TRUE)
-water <- read.csv("Water_05_06_2012_2012_08_16.csv", header = TRUE)
-water2 <- read.csv("Water_22_05_2012_2012_08_21.csv", header = TRUE)
-water3 <- read.csv("Water_24_04_2012_2012_08_21.csv", header = TRUE) 
+water <- read.csv("Water_22_05_2012_2012_10_01_15_01_39.csv", header = TRUE)
+water2 <- read.csv("Water_24_04_2012_2012_10_05_15_10_29.csv", header = TRUE)
+water3 <- read.csv("Water_05_06_2012_2012_10_01_15_00_38.csv", header = TRUE) 
 
 e1 <- education[c('mylga_state', 'mylga', 'ward', 'community', 'level_of_education', 'school_name', 'school_address')]     
 e2 <- education2[c('mylga_state', 'mylga', 'ward', 'community', 'level_of_education', 'school_name', 'school_address')]
@@ -32,17 +32,16 @@ e <- rbind(e1,e2,e3)
 h <- rbind(h1,h2,h3)
 w <- rbind(w1,w2,w3)
 
+#controling width
 h$facility_address <- substr(gsub(". +", ".", (gsub(", +", ",", as.character(h$facility_address)))), 0, 40)
 h$facility_name <- substr(gsub(". +", ".", (gsub(", +", ",", as.character(h$facility_name)))), 0, 40)
 
-#e$facility_address <- substr(gsub(". +", ".", (gsub(", +", ",", as.character(e$facility_address)))), 0, 40)
-#w$facility_address <- substr(gsub(". +", ".", (gsub(", +", ",", as.character(w$facility_address)))), 0, 40)
-
+e$school_name <- substr(gsub(". +", ".", (gsub(", +", ",", as.character(e$school_name)))), 0, 40)
+e$school_address <- substr(gsub(". +", ".", (gsub(", +", ",", as.character(e$school_address)))), 0, 40)
 
 row.names(e) <- NULL
 row.names(h) <- NULL
 row.names(w) <- NULL
-
 
 #####CLEANING#####
 
@@ -80,7 +79,6 @@ clean_w <- subset(w, (water_source_type!="420.5") & (water_source_type!="8.95821
 
 #renaming erroneous values
 levels(clean_w$water_scheme_type)[levels(clean_w$water_scheme_type=="water_sourc")] <- "water_source"
-
 
 ################Generating Text Plots#################
 ####education
