@@ -33,8 +33,10 @@ h <- rbind(h1,h2,h3)
 w <- rbind(w1,w2,w3)
 
 h$facility_address <- substr(gsub(". +", ".", (gsub(", +", ",", as.character(h$facility_address)))), 0, 40)
-e$facility_address <- substr(gsub(". +", ".", (gsub(", +", ",", as.character(e$facility_address)))), 0, 40)
-w$facility_address <- substr(gsub(". +", ".", (gsub(", +", ",", as.character(w$facility_address)))), 0, 40)
+h$facility_name <- substr(gsub(". +", ".", (gsub(", +", ",", as.character(h$facility_name)))), 0, 40)
+
+#e$facility_address <- substr(gsub(". +", ".", (gsub(", +", ",", as.character(e$facility_address)))), 0, 40)
+#w$facility_address <- substr(gsub(". +", ".", (gsub(", +", ",", as.character(w$facility_address)))), 0, 40)
 
 
 row.names(e) <- NULL
