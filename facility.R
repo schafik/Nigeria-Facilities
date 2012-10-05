@@ -6,9 +6,9 @@ library('gplots')
 
 
 row.names=FALSE
-#education <- read.csv("Education_05_06_2012_2012_08_16.csv", header = TRUE)
-#education2 <- read.csv("Education_17_04_2012_2012_08_21.csv", header = TRUE)
-#education3 <- read.csv("Education_22_05_2012_2012_08_21.csv", header = TRUE)
+education <- read.csv("Education_05_06_2012_2012_08_16.csv", header = TRUE)
+education2 <- read.csv("Education_17_04_2012_2012_08_21.csv", header = TRUE)
+education3 <- read.csv("Education_22_05_2012_2012_08_21.csv", header = TRUE)
 health <- read.csv("Health_05_06_2012_2012_10_03_16_48_41.csv", header = TRUE)
 health2 <- read.csv("Health_17_04_2012_2012_10_03_16_49_35.csv", header = TRUE)
 health3 <- read.csv("Health_22_05_2012_2012_10_03_16_51_22.csv", header = TRUE)
@@ -16,9 +16,9 @@ health3 <- read.csv("Health_22_05_2012_2012_10_03_16_51_22.csv", header = TRUE)
 #water2 <- read.csv("Water_22_05_2012_2012_08_21.csv", header = TRUE)
 #water3 <- read.csv("Water_24_04_2012_2012_08_21.csv", header = TRUE) 
 
-#e1 <- education[c('mylga_state', 'mylga', 'ward', 'community', 'school_name', 'school_address', 'level_of_education')]     
-#e2 <- education2[c('mylga_state', 'mylga', 'ward', 'community', 'school_name', 'school_address', 'level_of_education')]
-#e3 <- education3[c('mylga_state', 'mylga', 'ward', 'community', 'school_name', 'school_address', 'level_of_education')]
+e1 <- education[c('mylga_state', 'mylga', 'ward', 'community', 'level_of_education', 'school_name', 'school_address')]     
+e2 <- education2[c('mylga_state', 'mylga', 'ward', 'community', 'level_of_education', 'school_name', 'school_address')]
+e3 <- education3[c('mylga_state', 'mylga', 'ward', 'community', 'level_of_education', 'school_name', 'school_address')]
 
 h1 <- health[c('mylga', 'mylga_state', 'ward', 'community', 'facility_type', 'facility_name', 'facility_address')]    
 h2 <- health2[c('mylga', 'mylga_state', 'ward', 'community', 'facility_type', 'facility_name', 'facility_address')]
@@ -29,23 +29,31 @@ h3 <- health3[c('mylga', 'mylga_state', 'ward', 'community', 'facility_type', 'f
 #w2 <- water2 [c('mylga', 'mylga_state', 'ward', 'community', 'water_scheme_type', 'water_source_type', 'lift_mechanism')]
 #w3 <- water3 [c('mylga', 'mylga_state', 'ward', 'community', 'water_scheme_type', 'water_source_type', 'lift_mechanism')]
 
-#e <- rbind(e1,e2,e3)   
+e <- rbind(e1,e2,e3)   
 h <- rbind(h1,h2,h3)
 #w <- rbind(w1,w2,w3)
 
-#row.names(e) <- NULL
+row.names(e) <- NULL
 row.names(h) <- NULL
 #row.names(w) <- NULL
 
 
 ################Generating Text Plots#################
 ####education
-#dlply(e, .(mylga), function(smalldf) { 
- # smalldf 
-#})
+e_1 <- dlply(e, .(mylga), function(smalldf) { 
+  smalldf$level_of_education <- as.factor(as.character(smalldf$level_of_education))
+  smalldf
+})
 
-###   [-c(2,6)
+levels(e$mylga)[levels(e$mylga)=="n/a"] <- "NA"
 
+for (lga in e$mylga) {
+  e_lga_df <- e_1[[lga]]
+  pdf(paste("educationoutput/", lga, "_education.pdf", sep=""), width=12)
+  textplot(e_lga_df[order(e_lga_df$community, e_lga_df$level_of_education),][-c(1,2)], show.rownames = FALSE, mfrow=50)
+  title(lga, cex=1.25)
+  dev.off()
+}
 
 ####health
 h_1 <- dlply(h, .(mylga), function(smalldf) { 
