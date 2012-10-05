@@ -31,6 +31,10 @@ h3 <- health3[c('mylga', 'mylga_state', 'ward', 'community', 'facility_type', 'f
 
 e <- rbind(e1,e2,e3)   
 h <- rbind(h1,h2,h3)
+h$facility_address <- substr(gsub(". +", ".", (gsub(", +", ",", as.character(h$facility_address)))), 0, 40)
+e$facility_address <- substr(gsub(". +", ".", (gsub(", +", ",", as.character(e$facility_address)))), 0, 40)
+w$facility_address <- substr(gsub(". +", ".", (gsub(", +", ",", as.character(w$facility_address)))), 0, 40)
+
 #w <- rbind(w1,w2,w3)
 
 row.names(e) <- NULL
@@ -69,7 +73,7 @@ for (lga in h$mylga) {
   textplot(h_lga_df[order(h_lga_df$community, h_lga_df$facility_type),][-c(1,2)], show.rownames = FALSE, mfrow=50)
   title(lga, cex=1.25)
   dev.off()
-  }
+}
 
 ####water
 #dlply(w, .(mylga), function(smalldf) { 
