@@ -3,6 +3,7 @@ getwd()
 library('ggplot2')
 library('plyr')
 library('gplots') 
+library('doBy')
 
 
 row.names=FALSE
