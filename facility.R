@@ -44,6 +44,11 @@ row.names(e) <- NULL
 row.names(h) <- NULL
 row.names(w) <- NULL
 
+#tidying up health facility names
+tgt=c('motorized','motorized','motorized','motorized','non_motorized','non_motorized','non_motorized','non_motorized','non_motorized','N/A')))
+
+h <- function(df) factor(recodeVar(as.character(df$facility_type), src=c('comprehensivehealthcentre','cottagehospital','dentalclinic','federalmedicalcentre','generalhospital','healthpostdispensary','maternity','primaryhealthcarecentre','primaryhealthclinic','specialisthospital','teachinghospital','wardmodelphccentre'), tgt=c('CHC', 'Hospital_Cottage', 'Clinic_Dental', 'FMC', 'GH', 'HPD', 'Maternity', 'PHCentre', 'PHClinic', 'Hospital_Specialist', 'Hospital_Teaching', 'Ward_Model_PHCentre')))
+
 #####CLEANING#####
 
 #education
